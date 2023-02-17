@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace CardGame
 {
@@ -7,63 +6,43 @@ namespace CardGame
     {
         static void Main(string[] args)
         {
+            string gameChoice;
+            do
+            {
+                Console.WriteLine("Deal hand of cards for blackjack or poker (bj / poker / quit)");
+                gameChoice = Console.ReadLine();
 
-            Console.ReadLine();
+                if (gameChoice.ToLower() == "bj")
+                {
+                    BlackjackDeck bjDeck = new BlackjackDeck();
+
+                    Console.WriteLine("Now dealing cards for Blackjack");
+                    Console.WriteLine();
+                    var hand = bjDeck.DealCards();
+
+                    foreach (var card in hand)
+                    {
+                        Console.WriteLine($"{card.Value.ToString()} of {card.Suit.ToString()} ");
+                    }
+                    Console.ReadLine();
+                }
+                else if (gameChoice.ToLower() == "poker")
+                {
+                    PokerDeck pokerDeck = new PokerDeck();
+
+                    Console.WriteLine("Now dealing cards for Poker");
+                    Console.WriteLine();
+                    var hand = pokerDeck.DealCards();
+
+                    foreach (var card in hand)
+                    {
+                        Console.WriteLine($"{card.Value.ToString()} of {card.Suit.ToString()} ");
+                    }
+                    Console.ReadLine();
+                } 
+            } while (gameChoice != "quit");
         }
     }
 
-    public abstract class Deck
-    {
-        protected List<PlayingCard> fullDeck = new List<PlayingCard>();
-        protected List<PlayingCard> drawPile = new List<PlayingCard>();
-        protected List<PlayingCard> discardPile = new List<PlayingCard>();
 
-        public void CreateDeck()
-        {
-
-        }
-
-        public virtual void ShuffleDeck()
-        {
-
-        }
-
-        public abstract List<PlayingCard> DealCard();
-
-        public virtual PlayingCard RequestCard()
-        {
-
-        }
-    }
-
-    public class PlayingCard
-    {
-        public CardSuit Suit { get; set; }
-        public int CardValue { get; set; }
-    }
-
-    public enum CardValue
-    {
-        Ace,
-        Two,
-        Three,
-        Four,
-        Five,
-        Six,
-        Seven,
-        Eight,
-        Nine,
-        Ten,
-        Jack,
-        Queen,
-        King
-    }
-
-    public enum CardSuit
-    {
-        Hearts,
-        Clubs,
-        Spades,
-        Diamond
-    }
 }
